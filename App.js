@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import Deck from './components/Deck/Deck';
 
@@ -21,6 +21,7 @@ export default class App extends React.Component {
   renderCard(item) {
     return (
       <Card
+        key={item.id}
         title={item.text}
         image={{ uri: item.uri }}
       >
@@ -39,12 +40,14 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Deck
-          data={DATA}
-          renderCard={this.renderCard}
-        />
-      </View>
+      // <ScrollView>
+        <View style={styles.container}>
+          <Deck
+            data={DATA}
+            renderCard={this.renderCard}
+          />
+        </View>
+      // </ScrollView>
     );
   }
 }
