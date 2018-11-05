@@ -26,7 +26,7 @@ export default class App extends React.Component {
         image={{ uri: item.uri }}
       >
         <Text style={{ marginBottom: 10 }} >
-          Card Info
+          Animated Card Info With Pan Handler
         </Text>
         <Button
           icon={{ name: 'code' }}
@@ -40,14 +40,14 @@ export default class App extends React.Component {
 
   render() {
     return (
-      // <ScrollView>
+      <ScrollView>
         <View style={styles.container}>
           <Deck
             data={DATA}
             renderCard={this.renderCard}
           />
         </View>
-      // </ScrollView>
+      </ScrollView>
     );
   }
 }
