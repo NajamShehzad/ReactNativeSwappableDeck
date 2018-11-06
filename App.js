@@ -45,6 +45,8 @@ export default class App extends React.Component {
           <Deck
             data={DATA}
             renderCard={this.renderCard}
+            onSwipeLeft={() => console.log("Left Working")}
+            onSwipeRight={() => console.log('Right Working')}
           />
         </View>
       </ScrollView>
