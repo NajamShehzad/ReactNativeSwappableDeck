@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { View, Animated, PanResponder, Dimensions } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
+const SWIPR_OUT_DURATION = 250;
 
 
 class Deck extends Component {
@@ -14,20 +16,27 @@ class Deck extends Component {
         const panResponder = PanResponder.create({
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
-                if(gesture.dx > SWIPE_THRESHOLD){
-                    console.log('Swipe Right');   
-                }else if( gesture .dx  < -SWIPE_THRESHOLD){
-                    console.log('Swipe Left');   
-                }else{
-                    position.setValue({ x: gesture.dx, y: gesture.dy })
-                }
-
+                position.setValue({ x: gesture.dx, y: gesture.dy })
             },
-            onPanResponderRelease: () => {
-                this.resetPosition();
+            onPanResponderRelease: (event, gesture) => {
+                if (gesture.dx > SWIPE_THRESHOLD) {
+                    this.forceSwipe('right');
+                } else if (gesture.dx < -SWIPE_THRESHOLD) {
+                    this.forceSwipe('left');
+                } else {
+                    this.resetPosition();
+                }
             }
         });
         this.state = { panResponder, position };
+    }
+
+    forceSwipe(direction) {
+        const x = direction === 'right' ? (SCREEN_WIDTH + 120) : (-SCREEN_WIDTH - 120);
+        Animated.timing(this.state.position, {
+            toValue: { x, y: 0 },
+            duration: SWIPR_OUT_DURATION
+        }).start();
     }
 
     resetPosition() {
