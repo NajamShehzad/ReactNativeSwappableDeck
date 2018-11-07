@@ -54,7 +54,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <ScrollView>
+      // <ScrollView>
         <View style={styles.container}>
           <Deck
             data={DATA}
@@ -63,8 +63,13 @@ export default class App extends React.Component {
             onSwipeRight={() => console.log('Right Working')}
             renderNoMoreCards={this.renderNoMoreCards}
           />
+          <View>
+            <Text>
+              Test Under images
+            </Text>
+          </View>
         </View>
-      </ScrollView>
+      // </ScrollView>
     );
   }
 }

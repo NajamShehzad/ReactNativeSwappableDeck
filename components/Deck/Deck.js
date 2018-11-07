@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { View, Animated, PanResponder, Dimensions } from 'react-native';
+import { View, Animated, PanResponder, Dimensions, StyleSheet, LayoutAnimation, UIManager } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
@@ -40,6 +40,18 @@ class Deck extends Component {
             index: 0
         };
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.data !== this.props.data) {
+            this.setState({ index: 0 });
+        }
+    }
+
+    componentWillUpdate() {
+        UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+        LayoutAnimation.spring();
+    }
+
 
     forceSwipe(direction) {
         const x = direction === 'right' ? (SCREEN_WIDTH + 120) : (-SCREEN_WIDTH - 120);
@@ -92,7 +104,7 @@ class Deck extends Component {
                 return (
                     <Animated.View
                         key={item.id}
-                        style={this.getCardStyle()}
+                        style={[this.getCardStyle(), styles.cardStyle, { zIndex: 99 }]}
                         {...this.state.panResponder.panHandlers}
                     >
                         {this.props.renderCard(item)}
@@ -101,8 +113,12 @@ class Deck extends Component {
             }
 
 
-            // return this.props.renderCard(item)
-        })
+            return (
+                <Animated.View key={item.id} style={[styles.cardStyle, { zIndex: 5 }]} >
+                    {this.props.renderCard(item)}
+                </Animated.View>
+            )
+        }).reverse();
     }
 
     render() {
@@ -114,4 +130,11 @@ class Deck extends Component {
     }
 }
 
+
+const styles = StyleSheet.create({
+    cardStyle: {
+        position: 'absolute',
+        width: SCREEN_WIDTH
+    }
+})
 export default Deck;
