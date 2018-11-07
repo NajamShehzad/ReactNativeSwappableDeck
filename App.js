@@ -37,7 +37,21 @@ export default class App extends React.Component {
     )
   }
 
-
+  renderNoMoreCards() {
+    return (
+      <Card
+        title="All Done"
+      >
+        <Text style={{ marginBottom: 10 }}>
+          No More Cards to Show
+      </Text>
+        <Button
+          backgroundColor="#03A9F4"
+          title="View Now"
+        />
+      </Card>
+    )
+  }
   render() {
     return (
       <ScrollView>
@@ -47,6 +61,7 @@ export default class App extends React.Component {
             renderCard={this.renderCard}
             onSwipeLeft={() => console.log("Left Working")}
             onSwipeRight={() => console.log('Right Working')}
+            renderNoMoreCards={this.renderNoMoreCards}
           />
         </View>
       </ScrollView>
