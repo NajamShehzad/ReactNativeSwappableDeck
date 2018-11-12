@@ -1,3 +1,6 @@
 node_modules/**/*
 .expo/*
 npm-debug.*
+
+firebaseAPi.js
+google-services.json
